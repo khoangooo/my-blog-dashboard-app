@@ -1,5 +1,6 @@
 import { ConfigProvider } from 'antd';
-import AppLayout from '@components/layout';
+import { RouterProvider } from "react-router-dom";
+import routes from "@routes";
 import 'antd/dist/reset.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         },
       }}
     >
-      <AppLayout />
+      <RouterProvider router={routes} />
     </ConfigProvider>
   )
 }

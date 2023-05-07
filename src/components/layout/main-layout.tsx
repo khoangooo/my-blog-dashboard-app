@@ -1,50 +1,29 @@
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
+import { Outlet } from 'react-router-dom';
+import MenuItems from './menu-items';
 
 const { Header, Sider, Content } = Layout;
 
-type Props = {
-  children?: ReactNode
-}
-
-const AppLayout = ({ children }: Props) => {
+function MainLayout(){
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   return (
-    <Layout style={{minHeight: "100vh"}}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
+          items={MenuItems}
         />
       </Sider>
       <Layout>
@@ -67,12 +46,11 @@ const AppLayout = ({ children }: Props) => {
             background: colorBgContainer,
           }}
         >
-          Content
-          {children}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
   );
 }
 
-export default AppLayout;
+export default MainLayout;
