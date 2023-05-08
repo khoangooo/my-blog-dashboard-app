@@ -1,7 +1,8 @@
 import {
   createBrowserRouter,
 } from "react-router-dom";
-import {MainLayout, ErrorPage} from "../components/layout";
+import { MainLayout, ErrorPage } from "@components/layout";
+import { PostDetails, PostsList } from "@modules/Posts";
 
 const router = createBrowserRouter([
   {
@@ -10,8 +11,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <h1>About</h1>,
-        index: true
+        element: <PostsList />,
+        index: true,
+      },
+      {
+        element: <PostDetails />,
+        path: "/post/add"
       },
     ]
   },

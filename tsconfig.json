@@ -23,7 +23,10 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@containers/*": ["src/containers/*"],
+      "@modules/*": ["src/modules/*"],
+      "@types/*": ["src/types/*"],
     }
   },
   "include": ["src"],

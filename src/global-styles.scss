@@ -1,0 +1,26 @@
+@for $i from 0 through 100 {
+
+  .mt-#{$i}px,
+  .my-#{$i}px,
+  .m-#{$i}px {
+    margin-top: #{$i}px;
+  }
+
+  .mb-#{$i}px,
+  .my-#{$i}px,
+  .m-#{$i}px {
+    margin-bottom: #{$i}px;
+  }
+
+  .ml-#{$i}px,
+  .mx-#{$i}px,
+  .m-#{$i}px {
+    margin-left: #{$i}px;
+  }
+
+  .mr-#{$i}px,
+  .my-#{$i}px,
+  .m-#{$i}px {
+    margin-left: #{$i}px;
+  }
+}

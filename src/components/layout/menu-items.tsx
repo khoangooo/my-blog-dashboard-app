@@ -11,8 +11,8 @@ const MenuItems: MenuProps['items'] = [
     key: '1',
     icon: <UserOutlined />,
     label: (
-      <Link to="/about">
-        About
+      <Link to="/">
+        Posts
       </Link>
     ),
   },
