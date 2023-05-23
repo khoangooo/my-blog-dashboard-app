@@ -1,6 +1,6 @@
 import { Button, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { TPost } from 'src/types/post';
 
 const columns: ColumnsType<TPost> = [

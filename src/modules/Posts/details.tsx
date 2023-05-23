@@ -1,5 +1,5 @@
-import Editor from '@components/editor';
-import { Button, Form, Input } from 'antd';
+import TextEditor from '@components/editor';
+import { Button, Col, Form, Input, Row } from 'antd';
 
 const layout = {
   labelCol: { span: 8 },
@@ -27,12 +27,17 @@ const Details = () => {
       form={form}
       name="control-hooks"
       onFinish={onFinish}
-      style={{ maxWidth: 600 }}
+      style={{ maxWidth: "80%" }}
     >
-      <Form.Item name="note" label="Note" rules={[{ required: true }]}>
+      <Form.Item name="title" label="Title">
         <Input />
       </Form.Item>
-      <Editor />
+      <Form.Item name="excerpt" label="Excerpt" >
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item name="content" label="Content" >
+        <TextEditor />
+      </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Submit

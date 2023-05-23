@@ -1,0 +1,26 @@
+.text-editor {
+  .cke {
+    &_chrome {
+      border-radius: 6px;
+  
+      &:hover,
+      &:hover .cke_top,
+      &:hover .cke_bottom {
+        border-color: var(--color);
+        transition: all 0.2s;
+      }
+  
+    }
+  
+    &_inner,
+    &_top {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+  
+    &_bottom {
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+  }  
+}
