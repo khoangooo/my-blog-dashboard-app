@@ -12,6 +12,17 @@ export default defineConfig({
       { find: '@modules', replacement: path.resolve(__dirname, 'src/modules') },
       { find: '@containers', replacement: path.resolve(__dirname, 'src/containers') },
       { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
+      { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
     ],
   },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'https://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      }
+    }
+  }
 })

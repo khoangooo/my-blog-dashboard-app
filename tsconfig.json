@@ -27,6 +27,7 @@
       "@containers/*": ["src/containers/*"],
       "@modules/*": ["src/modules/*"],
       "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": ["src"],
