@@ -1,4 +1,4 @@
-import TextEditor from '@components/editor';
+import TextEditor from '@/components/editor';
 import { Button, Col, Form, Input, Row } from 'antd';
 
 const layout = {

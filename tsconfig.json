@@ -22,12 +22,8 @@
      /* Aliases */
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@routes/*": ["src/routes/*"],
-      "@containers/*": ["src/containers/*"],
-      "@modules/*": ["src/modules/*"],
-      "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"],
+      "@": ["src"],
+      "@/*": ["src/*"],
     }
   },
   "include": ["src"],

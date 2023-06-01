@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd';
 import { RouterProvider } from "react-router-dom";
-import routes from "@routes";
+import routes from "@/routes";
+import AuthProvider from '@/containers/auth-provider';
 import 'antd/dist/reset.css';
 import './global-styles.scss';
 
@@ -13,7 +14,9 @@ function App() {
         },
       }}
     >
-      <RouterProvider router={routes} />
+      <AuthProvider>
+        <RouterProvider router={routes} fallbackElement={<div></div>} />
+      </AuthProvider>
     </ConfigProvider>
   )
 }

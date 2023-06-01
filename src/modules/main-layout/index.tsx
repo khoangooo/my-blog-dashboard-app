@@ -6,7 +6,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
-import MenuItems from './menu-items';
+import MenuItems from '../../components/layout/menu-items';
 
 const { Header, Sider, Content } = Layout;
 

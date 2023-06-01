@@ -1,12 +1,14 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import api from '@utils/api';
+import api from '@/utils/api';
 import "./styles.scss"
+import { useState } from 'react';
 
 function Login() {
   const navigate = useNavigate()
   const [form] = Form.useForm();
+  const [user, setUser] = useState<any>({});
 
   const onFinish = (values: any) => {
     api.post("/me", {
@@ -14,8 +16,13 @@ function Login() {
         username: values.username,
         password: values.password
       })
-    }).then(res => console.log(res))
-    // navigate("/")
+    }).then((res: any) => {
+      if (res.status) {
+        navigate("/")
+        // setUser(res.data)
+      }
+    })
+    
   };
 
   return (

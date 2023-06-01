@@ -1,23 +1,27 @@
-import {
-  createBrowserRouter,
-} from "react-router-dom";
-import { MainLayout, ErrorPage } from "@components/layout";
-import Login from "@modules/Login";
-import { PostDetails, PostsList } from "@modules/Posts";
+import { createBrowserRouter } from "react-router-dom";
+import { ErrorPage } from "@/components/layout";
+import Login from "@/modules/login";
+import { PostDetails, PostsList } from "@/modules/posts";
+import PermissionRequired from "@/components/layout/permission-required";
+import MainLayout from "@/modules/main-layout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <PermissionRequired>
+        <MainLayout />
+      </PermissionRequired>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <PostsList />,
         index: true,
+        element: <PostsList />,
       },
       {
+        path: "/post/add",
         element: <PostDetails />,
-        path: "/post/add"
       },
     ]
   },
