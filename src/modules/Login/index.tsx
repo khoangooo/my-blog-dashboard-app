@@ -1,28 +1,19 @@
+import { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import api from '@/utils/api';
 import "./styles.scss"
-import { useState } from 'react';
+import { AuthContext } from '@/context';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const navigate = useNavigate()
   const [form] = Form.useForm();
-  const [user, setUser] = useState<any>({});
+  const navigate = useNavigate();
+  const { login }: any = useContext(AuthContext)
+
+  const handleNavigateToHomePage = () => navigate("/")
 
   const onFinish = (values: any) => {
-    api.post("/me", {
-      body: JSON.stringify({
-        username: values.username,
-        password: values.password
-      })
-    }).then((res: any) => {
-      if (res.status) {
-        navigate("/")
-        // setUser(res.data)
-      }
-    })
-    
+    login(values, handleNavigateToHomePage)
   };
 
   return (

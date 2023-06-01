@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import { Layout, Menu, Button, theme, Avatar, Row, Dropdown, MenuProps, message } from 'antd';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { useContext, useState } from 'react';
+import { Layout, Menu, Button, theme, Avatar, Row, Dropdown, MenuProps } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
 import MenuItems from '../../components/layout/menu-items';
+import { AuthContext } from '@/context';
 
 const { Header, Sider, Content } = Layout;
 
@@ -14,20 +11,23 @@ function MainLayout() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  
   const navigate = useNavigate();
+
+  const { logout }: any = useContext(AuthContext)
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const handleNavigateLoginPage = () => navigate("/login")
+
   const handleLogout = () => {
-    navigate("/login")
+    logout(handleNavigateLoginPage);
   }
 
   const items: MenuProps['items'] = [
     {
       key: 'logout',
       label: 'Log out',
-      onClick: handleLogout 
+      onClick: handleLogout
     },
   ];
 

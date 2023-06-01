@@ -17,10 +17,10 @@ class Api {
         if (!response.ok) {
           throw new Error(response.statusText)
         }
-        return response.json() as Promise<{ data: T }>
+        return response.json() as Promise<T>
       })
-      .then(data => {
-        return data.data;
+      .then(resJson => {
+        return resJson;
       })
       .catch((errors) => {
         const error = new Error(errors ?? 'unknown')

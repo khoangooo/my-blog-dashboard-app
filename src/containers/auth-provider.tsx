@@ -1,11 +1,9 @@
 import { PropsWithChildren, useState } from "react";
 import { AuthContext } from "@/context";
 import api from "@/utils/api";
-import { useNavigate } from "react-router-dom";
 
 function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
 
   const login = ({ username, password }: { username: string, password: string }, callback: VoidFunction) => {
     api
@@ -16,7 +14,6 @@ function AuthProvider({ children }: PropsWithChildren) {
         if (res.status) {
           localStorage.setItem("user", JSON.stringify(res.data))
           setUser(res.data)
-          navigate("/")
           callback()
         }
       })
