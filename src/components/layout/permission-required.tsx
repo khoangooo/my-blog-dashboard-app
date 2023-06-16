@@ -1,15 +1,15 @@
-import { AuthContext } from "@/context";
-import { PropsWithChildren, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { PropsWithChildren } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 
 function PermissionRequired({ children }: PropsWithChildren) {
-  const { user }: any = useContext(AuthContext);
+  const token = localStorage.getItem('accessToken')
+  const location = useLocation();
 
-  if (user) {
-    return <>{children}</>
+  if (!token) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return <Navigate to="/login" replace />;
+  return <>{children}</>;
 }
 
 export default PermissionRequired;

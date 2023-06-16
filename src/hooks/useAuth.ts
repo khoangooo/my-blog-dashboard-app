@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
+import { AuthContext } from "@/context";
+import { useContext } from "react";
 
 function useAuth() {
-  const [user, setUser] = useState<any>(undefined);
-
-  useEffect(() => {
-    const item = JSON.parse(localStorage.getItem("user") as string); 
-    if (item) {
-      setUser(item)
-    }
-  }, [])
-
-  return user;
+  return useContext(AuthContext)
 }
 
 export default useAuth;

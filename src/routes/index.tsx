@@ -1,18 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ErrorPage } from "@/components/layout";
+import { ErrorPage, PermissionRequired } from "@/components/layout";
 import Login from "@/modules/login";
 import { PostDetails, PostsList } from "@/modules/posts";
-import PermissionRequired from "@/components/layout/permission-required";
 import MainLayout from "@/modules/main-layout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <PermissionRequired>
-        <MainLayout />
-      </PermissionRequired>
-    ),
+    element: <PermissionRequired><MainLayout /></PermissionRequired>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -27,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <Login />
   },
 ]);
 

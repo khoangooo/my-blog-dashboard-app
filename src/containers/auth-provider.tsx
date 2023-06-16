@@ -1,31 +1,31 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { AuthContext } from "@/context";
 import api from "@/utils/api";
 
 function AuthProvider({ children }: PropsWithChildren) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
+  const token = localStorage.getItem("accessToken")
 
-  const login = ({ username, password }: { username: string, password: string }, callback: VoidFunction) => {
-    api
-      .post("/me", {
-        body: JSON.stringify({ username, password })
-      })
+  const getUser = () => {
+    setLoading(true)
+    api.get("/me")
       .then((res: any) => {
         if (res.status) {
-          localStorage.setItem("user", JSON.stringify(res.data))
-          setUser(res.data)
-          callback()
+          setUser(res.data);
         }
       })
-  };
+      .catch(e => console.log(e))
+      .finally(() => setLoading(false))
+  }
 
-  const logout = (callback: VoidFunction) => {
-    localStorage.removeItem("user");
-    setUser(null)
-    callback()
-  };
+  useEffect(() => {
+    if (token) {
+      getUser();
+    }
+  }, [token])
 
-  const value: any = { user, login, logout };
+  const value: any = { user, getUser, loading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

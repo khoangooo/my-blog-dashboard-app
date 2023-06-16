@@ -1,20 +1,30 @@
-import { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import "./styles.scss"
-import { AuthContext } from '@/context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import api from '@/utils/api';
 
 function Login() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { login }: any = useContext(AuthContext)
-
-  const handleNavigateToHomePage = () => navigate("/")
+  const location = useLocation();
 
   const onFinish = (values: any) => {
-    login(values, handleNavigateToHomePage)
+    api.post("/login", {
+      body: JSON.stringify(values)
+    }).then((res: any) => {
+      if (res.status) {
+        localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
+        const origin = location.state?.from?.pathname || '/';
+        navigate(origin)
+      }
+    })
   };
+
+  if (localStorage.getItem('accessToken')) {
+    const origin = location.state?.from?.pathname || '/';
+    return <Navigate to={origin} replace />
+  }
 
   return (
     <div className='login-form'>
