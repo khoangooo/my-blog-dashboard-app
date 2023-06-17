@@ -5,8 +5,11 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import MenuItems from '@/components/layout/menu-items';
 import { useAuth } from '@/hooks';
 import Loading from '@/components/loading';
+import { refreshAccessToken } from '@/utils/token';
 
 const { Header, Sider, Content } = Layout;
+
+refreshAccessToken()
 
 function MainLayout() {
   const {
@@ -17,7 +20,7 @@ function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.clear();
     navigate("/login")
   }
 

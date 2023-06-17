@@ -23,7 +23,7 @@ class Api {
 
   static async get(endpoint: string, data?: string | URLSearchParams | Record<string, string> | string[][] | undefined) {
     let endpointWithParams = endpoint + new URLSearchParams(data)
-    const token = JSON.parse(localStorage.getItem("accessToken") as string);
+    const token = JSON.parse(localStorage.getItem("token") as string);
 
     const initConfig = {
       method: "GET",

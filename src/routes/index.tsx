@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ErrorPage, PermissionRequired } from "@/components/layout";
+import { ErrorPage, PrivatedRoute } from "@/components/layout";
 import Login from "@/modules/login";
 import { PostDetails, PostsList } from "@/modules/posts";
 import MainLayout from "@/modules/main-layout";
@@ -7,7 +7,11 @@ import MainLayout from "@/modules/main-layout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PermissionRequired><MainLayout /></PermissionRequired>,
+    element: (
+      <PrivatedRoute>
+        <MainLayout />
+      </PrivatedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

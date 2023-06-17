@@ -1,27 +1,30 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import "./styles.scss"
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import api from '@/utils/api';
+import { getLocalData, storeData } from '@/utils/token';
+import "./styles.scss"
 
 function Login() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const location = useLocation();
+  const token = getLocalData("token") as string;
+  const remember = getLocalData("remember") as string;
 
   const onFinish = (values: any) => {
     api.post("/login", {
       body: JSON.stringify(values)
     }).then((res: any) => {
       if (res.status) {
-        localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
+        storeData({ token: res.data.token, timeout: res.data.timeout, remember: values.remember ? "1" : "0" });
         const origin = location.state?.from?.pathname || '/';
         navigate(origin)
       }
     })
   };
 
-  if (localStorage.getItem('accessToken')) {
+  if (token && remember === "1") {
     const origin = location.state?.from?.pathname || '/';
     return <Navigate to={origin} replace />
   }

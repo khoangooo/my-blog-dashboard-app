@@ -1,11 +1,13 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { AuthContext } from "@/context";
 import api from "@/utils/api";
+import { AuthContextType } from "@/types/auth-context";
+import { getLocalData } from "@/utils/token";
 
 function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<any>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  const token = localStorage.getItem("accessToken")
+  const token = getLocalData("token") as string;
 
   const getUser = () => {
     setLoading(true)
@@ -25,7 +27,7 @@ function AuthProvider({ children }: PropsWithChildren) {
     }
   }, [token])
 
-  const value: any = { user, getUser, loading };
+  const value: AuthContextType = { user, getUser, loading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
