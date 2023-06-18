@@ -1,13 +1,12 @@
-import { getLocalData } from "@/utils/token";
+import { retrieveData } from "@/utils/token";
 import { PropsWithChildren } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 function PrivatedRoute({ children }: PropsWithChildren) {
-  const token = getLocalData("token") as string;
-  const remember = getLocalData("remember") as string;
+  const token = retrieveData("token") as string;
   const location = useLocation();
 
-  if (!token || remember === "0") {
+  if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
   

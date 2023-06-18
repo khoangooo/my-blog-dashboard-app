@@ -6,7 +6,7 @@ export const storeData = (object: { [key: string]: any }) => {
   })
 }
 
-export const getLocalData = <T>(key: string) => {
+export const retrieveData = <T>(key: string) => {
   const data = localStorage.getItem(key) as string;
   if (data) {
     return JSON.parse(data) as T;
@@ -18,7 +18,7 @@ export const refreshAccessToken = () => {
   const TIME = 10 * 60 * 1000; // 10mins
 
   setInterval(() => {
-    const timeout = getLocalData("timeout") as string;
+    const timeout = retrieveData("timeout") as string;
     const timeCheck = Date.now() - parseInt(timeout);
 
     if (timeCheck > 0 && timeCheck < TIME) {

@@ -2,15 +2,14 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import api from '@/utils/api';
-import { getLocalData, storeData } from '@/utils/token';
+import { retrieveData, storeData } from '@/utils/token';
 import "./styles.scss"
 
 function Login() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const token = getLocalData("token") as string;
-  const remember = getLocalData("remember") as string;
+  const token = retrieveData("token") as string;
 
   const onFinish = (values: any) => {
     api.post("/login", {
@@ -24,7 +23,7 @@ function Login() {
     })
   };
 
-  if (token && remember === "1") {
+  if (token) {
     const origin = location.state?.from?.pathname || '/';
     return <Navigate to={origin} replace />
   }
