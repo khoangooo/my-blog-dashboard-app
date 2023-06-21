@@ -1,84 +1,44 @@
+import api from '@/utils/api';
 import { Button, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { TPost } from 'src/types/post';
 
 const columns: ColumnsType<TPost> = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+    render: (title) => <a>{title}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Excerpt',
+    dataIndex: 'excerpt',
+    key: 'excerpt',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
+    title: 'Content',
+    dataIndex: 'content',
+    key: 'content',
+  }
 ];
 
-const data: TPost[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
 
 function Posts() {
-
+  const [data, setData] = useState<TPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true)
+    api.get("/posts").then((res: any) => {
+      if (res.status) {
+        setData(res.data)
+        setLoading(false)
+      }
+    })
+  }, [])
 
   const handleAddNewPost = () => {
     navigate("/post/add")
@@ -89,8 +49,8 @@ function Posts() {
       <Row justify="end" className='mb-20px'>
         <Button type="primary" onClick={handleAddNewPost}>Add new post</Button>
       </Row>
-      
-      <Table columns={columns} dataSource={data} />
+
+      <Table loading={loading} rowKey="_id" columns={columns} dataSource={data} />
     </>
   )
 }

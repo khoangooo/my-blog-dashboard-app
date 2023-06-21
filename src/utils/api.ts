@@ -1,3 +1,5 @@
+import { retrieveData } from "./token"
+
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`.includes("localhost")
   ? `http://${import.meta.env.VITE_BASE_URL}/api/v1`
   : `https://${import.meta.env.VITE_BASE_URL}`
@@ -42,7 +44,7 @@ class Api {
     config: Pick<RequestInit, "body" | "headers">,
     method: "POST" | "PUT" | "PATCH" | "DELETE"
   ) {
-    const token = JSON.parse(localStorage.getItem("accessToken") as string);
+    const token = retrieveData("token") as string;
 
     const headers: any =
       (config.headers && Object.keys(config.headers).length > 0)

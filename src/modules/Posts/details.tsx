@@ -1,4 +1,5 @@
-import TextEditor from '@/components/editor';
+import RichTextEditor from '@/components/editor';
+import api from '@/utils/api';
 import { Button, Col, Form, Input, Row } from 'antd';
 
 const layout = {
@@ -14,7 +15,9 @@ const Details = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log(values);
+    api.post("/post", { body: JSON.stringify(values) }).then(res => {
+      console.log(res)
+    })
   };
 
   const onReset = () => {
@@ -36,7 +39,7 @@ const Details = () => {
         <Input.TextArea />
       </Form.Item>
       <Form.Item name="content" label="Content" >
-        <TextEditor />
+        <RichTextEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

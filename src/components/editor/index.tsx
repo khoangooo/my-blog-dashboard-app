@@ -1,12 +1,13 @@
 import { CKEditor } from 'ckeditor4-react';
 import "./styles.scss";
+import { useEffect } from 'react';
 
 type TProps = {
 	initData?: string;
 	onChange?: (v: string) => void;
 }
 
-const TextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
+const RichTextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 
 	const content: string | undefined = initData
 
@@ -18,14 +19,15 @@ const TextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 	return (
 		<div className='text-editor'>
 			<CKEditor
+				config={{ delayIfDetached: true}}
 				initData={content}
-				config={{
-					extraPlugins: 'easyimage',
-					removePlugins: 'image',
-					// cloudServices_uploadUrl: 'https://33333.cke-cs.com/easyimage/upload/',
-					// cloudServices_tokenUrl:
-					// 	'https://33333.cke-cs.com/token/dev/ijrDsqFix838Gh3wGO3F77FSW94BwcLXprJ4APSp3XQ26xsUHTi0jcb1hoBt'
-				}}
+				// config={{
+				// 	extraPlugins: 'easyimage',
+				// 	removePlugins: 'image',
+				// 	// cloudServices_uploadUrl: 'https://33333.cke-cs.com/easyimage/upload/',
+				// 	// cloudServices_tokenUrl:
+				// 	// 	'https://33333.cke-cs.com/token/dev/ijrDsqFix838Gh3wGO3F77FSW94BwcLXprJ4APSp3XQ26xsUHTi0jcb1hoBt'
+				// }}
 				onChange={handleChangeContent}
 				onInstanceReady={(e) => e.editor.container.setAttribute('style', `--color: ${defaultColor}`)}
 			/>
@@ -33,4 +35,4 @@ const TextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 	);
 }
 
-export default TextEditor;
+export default RichTextEditor;

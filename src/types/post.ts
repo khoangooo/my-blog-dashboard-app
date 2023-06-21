@@ -1,7 +1,6 @@
 export type TPost = {
   key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  title: string;
+  excerpt: string;
+  content: string;
 }
