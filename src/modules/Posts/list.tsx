@@ -1,4 +1,5 @@
 import api from '@/utils/api';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
@@ -21,6 +22,19 @@ const columns: ColumnsType<TPost> = [
     title: 'Content',
     dataIndex: 'content',
     key: 'content',
+  },
+  {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    render: () => <Space>
+      <Button type="link">
+        <EditOutlined />
+      </Button>
+      <Button type="link">
+        <DeleteOutlined />
+      </Button>
+    </Space>
   }
 ];
 
@@ -49,7 +63,7 @@ function Posts() {
       <Row justify="end" className='mb-20px'>
         <Button type="primary" onClick={handleAddNewPost}>Add new post</Button>
       </Row>
-
+      <Button onClick={() => api.post("/refresh", {}).then(res => console.log(res))}>test</Button>
       <Table loading={loading} rowKey="_id" columns={columns} dataSource={data} />
     </>
   )
