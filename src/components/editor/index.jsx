@@ -60,7 +60,7 @@ export default function RichtextEditor() {
             ErrorBoundary={LexicalErrorBoundary}
           />
           <HistoryPlugin />
-          <TreeViewPlugin />
+          {/* <TreeViewPlugin /> */}
           <AutoFocusPlugin />
           <CodeHighlightPlugin />
           <ListPlugin />
