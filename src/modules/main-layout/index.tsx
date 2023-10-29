@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks';
 import Loading from '@/components/loading';
 import { retrieveData, refreshAccessToken } from '@/utils/token';
 import { PrivatedRoute } from '@/components/layout';
+import api from '@/utils/api';
 
 const { Header, Sider, Content } = Layout;
 

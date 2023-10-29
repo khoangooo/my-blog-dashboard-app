@@ -15,22 +15,25 @@ export const retrieveData = <T>(key: string) => {
 }
 
 export const refreshAccessToken = () => {
-  const TIME = 10 * 60 * 1000; // 10mins
-
+  const time = (9*60 + 50) * 1000;
   setInterval(() => {
-    const timeout = retrieveData("timeout") as string;
-    const timeCheck = Date.now() - parseInt(timeout);
-
-    if (timeCheck > 0 && timeCheck < TIME) {
-      api.get("/refresh").then((res: any) => {
-        if (res.status) {
-          storeData({token: res.data.token, timeout: res.data.timeout});
-        }
-      })
-    } else {
-      localStorage.clear();
-      location.href = "/login"
+    const refreshToken = retrieveData<string>("refreshToken");
+    if (refreshToken) {
+      api
+        .post("/refresh", { body: JSON.stringify({ refreshToken }) })
+        .then((res: any) => {
+          if (res.status) {
+            console.log("success")
+            storeData({ token: res.data.token, timeout: res.data.timeout });
+          } else {
+            localStorage.clear();
+            location.href = "/login"
+          }
+        })
+        .catch((e) => {
+          localStorage.clear();
+          location.href = "/login"
+        })
     }
-
-  }, TIME - 1);
+  }, time);
 }

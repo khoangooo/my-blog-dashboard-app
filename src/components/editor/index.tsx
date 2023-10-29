@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import tinymce, { Editor as TinyMCEEditor } from 'tinymce';
 
 type TProps = {
 	initData?: string;
@@ -9,9 +10,9 @@ type TProps = {
 const RichTextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 
 	const content: string | undefined = initData || "<p>This is the initial content of the editor.</p>"
-	const editorRef: any = useRef(null);
+	const editorRef = useRef<TinyMCEEditor | null>(null);
 
-	const handleChangeContent = (a: string, editor: Editor) => {
+	const handleChangeContent = (a: string, editor: TinyMCEEditor) => {
 		onChange(a)
 
 	}
@@ -25,9 +26,10 @@ const RichTextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 				initialValue={content}
 				init={{
 					height: 500,
-					menubar: false,
-					plugins: "'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography inlinecss",
-					toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+					plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+					imagetools_cors_hosts: ['picsum.photos'],
+					menubar: 'file edit view insert format tools table help',
+					toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
 					content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
 					image_title: true,
 					/* enable automatic uploads of images represented by blob or data URIs*/
@@ -55,13 +57,14 @@ const RichTextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 									necessary, as we are looking to handle it internally.
 								*/
 								const id = 'blobid' + (new Date()).getTime();
-								const blobCache = tinymce.activeEditor.editorUpload.blobCache;
-								const base64 = reader.result.split(',')[1];
-								const blobInfo = blobCache.create(id, file, base64);
-								blobCache.add(blobInfo);
-
-								/* call the callback and populate the Title field with the file name */
-								cb(blobInfo.blobUri(), { title: file.name });
+								const blobCache = tinymce.activeEditor?.editorUpload?.blobCache;
+								const base64 = (reader.result as string)?.split(',')?.[1];
+								const blobInfo = blobCache?.create(id, file, base64);
+								if (blobInfo && blobCache) {
+									blobCache.add(blobInfo)
+									/* call the callback and populate the Title field with the file name */
+									cb(blobInfo.blobUri(), { title: file.name });
+								}
 							});
 							reader.readAsDataURL(file);
 						});
@@ -71,6 +74,7 @@ const RichTextEditor = ({ initData = "", onChange = () => { } }: TProps) => {
 					paste_data_images: true,
 					image_caption: true
 				}}
+				onChange={(e) => e.target.getContent()}
 				onEditorChange={handleChangeContent}
 			/>
 		</div>

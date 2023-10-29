@@ -16,7 +16,7 @@ function Login() {
       body: JSON.stringify(values)
     }).then((res: any) => {
       if (res.status) {
-        storeData({ token: res.data.token, timeout: res.data.timeout, remember: values.remember ? "1" : "0" });
+        storeData({ token: res.data.token, refreshToken: res.data.refreshToken, timeout: res.data.timeout, remember: values.remember ? "1" : "0" });
         const origin = location.state?.from?.pathname || '/';
         navigate(origin)
       }
@@ -37,10 +37,10 @@ function Login() {
         onFinish={onFinish}
       >
         <Form.Item
-          name="username"
-          rules={[{ required: true, message: 'Please input your Username!' }]}
+          name="email"
+          rules={[{ required: true, message: 'Please input your email!' }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
         </Form.Item>
         <Form.Item
           name="password"
